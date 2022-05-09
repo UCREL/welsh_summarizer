@@ -26,7 +26,7 @@ if language=='Cymraeg':
                 
 
      if option == 'Defnyddiwch destun enghreifftiol':
-          input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
+          input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=400)
      else:
           input_text = st.text_area('Teipiwch neu gludwch eich testun yn y blwch testun', '<Rhowch eich testun...>')
 
@@ -52,7 +52,7 @@ else:
                 min_value=10, max_value=50, step=10)/100
 
      if option == 'Use example text':
-          input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
+          input_text = st.text_area('Summarise the example text in the box:', example_text, height=400)
      else:
           input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>')
                

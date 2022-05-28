@@ -62,7 +62,7 @@ else:
          if summary:
             st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
          else:
-            st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
+            st.write(sent_tokenize(text_rank_summarize(input_text, ratio=1))[0])
          # process what needs to be displayed with regards to ratio
        else:
          st.write('Please enter your text')

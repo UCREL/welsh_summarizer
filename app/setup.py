@@ -14,7 +14,6 @@ nltk.download('punkt') # one time execution
 nltk.download('stopwords')
 
 EXAMPLES_DIR = 'example_texts_pub'
-# EXAMPLES_DIR = 'example_texts_cadw'
 
 ## Define summarizer models
 # text_rank

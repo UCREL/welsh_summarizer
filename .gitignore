@@ -8,6 +8,7 @@ __pycache__/
 *.pt
 *.data/
 *data/
+*app.old/
 
 #Sumariser allocation files
 *.allocations/

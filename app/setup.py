@@ -28,74 +28,74 @@ def uploadfile():
     else:
         return '<Please upload your file ...>'
 
-#apps------------------------------------------------------------------
-def run_summarizer():
-    language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
-    with st.expander("ℹ️ - About this app", expanded=False):
-        st.markdown(
-            """     
-            - This tool adapts the app from the [Welsh Summarization] (https://github.com/UCREL/welsh-summarization-dataset) project!
-            -   It performs simple extractive summarisation with the [TextRank]() alrogithm.
-            """
-        )
+# #apps------------------------------------------------------------------
+# def run_summarizer():
+    # language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
+    # with st.expander("ℹ️ - About this app", expanded=False):
+        # st.markdown(
+            # """     
+            # - This tool adapts the app from the [Welsh Summarization] (https://github.com/UCREL/welsh-summarization-dataset) project!
+            # -   It performs simple extractive summarisation with the [TextRank]() alrogithm.
+            # """
+        # )
 
-    if language=='Cymraeg':
-        st.markdown('### 🌷 Adnodd Creu Crynodebau')
-        st.markdown("#### Rhowch eich testun isod:")
-        option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
-        if option == 'Defnyddiwch destun enghreifftiol':
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR)
-                                                  if f.startswith(('cy','ex'))]))
+    # if language=='Cymraeg':
+        # st.markdown('### 🌷 Adnodd Creu Crynodebau')
+        # st.markdown("#### Rhowch eich testun isod:")
+        # option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
+        # if option == 'Defnyddiwch destun enghreifftiol':
+           # example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR)
+                                                  # if f.startswith(('cy','ex'))]))
 
-           with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
-               example_text = example_file.read()
+           # with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+               # example_text = example_file.read()
 
-           input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
+           # input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
         
-        elif option == 'Llwythwch ffeil testun i fyny':
-            text = uploadfile()
-            input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
+        # elif option == 'Llwythwch ffeil testun i fyny':
+            # text = uploadfile()
+            # input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
 
-        else:
-            input_text = st.text_area('Teipiwch neu gludwch eich testun yn y blwch testun', '<Rhowch eich testun...>')
+        # else:
+            # input_text = st.text_area('Teipiwch neu gludwch eich testun yn y blwch testun', '<Rhowch eich testun...>')
 
-        chosen_ratio = st.sidebar.slider('Dewiswch gymhareb y crynodeb [10% i 50%]:', min_value=10, max_value=50, step=10)/100
-        if st.button("Crynhoi👈"):
-            if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':
-                summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                if summary:
-                    st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
-                else:
-                    st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
-            else:
-                st.write("Rhowch eich testun...(Please enter your text...)")
+        # chosen_ratio = st.sidebar.slider('Dewiswch gymhareb y crynodeb [10% i 50%]:', min_value=10, max_value=50, step=10)/100
+        # if st.button("Crynhoi👈"):
+            # if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':
+                # summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                # if summary:
+                    # st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                # else:
+                    # st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
+            # else:
+                # st.write("Rhowch eich testun...(Please enter your text...)")
 
-    else: #English
-        st.markdown('### 🌷 Welsh Summary Creator')
-        st.markdown("#### Enter your text below:")
-        option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-        if option == 'Use an example text':           
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR)
-                                                  if f.startswith(('en','ex'))]))
-           with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
-               example_text = example_file.read()
-               input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
-        elif option == 'Upload a text file':
-            text = uploadfile()
-            input_text = st.text_area('Summarise uploaded text:', text, height=300)
-        else:
-            input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
+    # else: #English
+        # st.markdown('### 🌷 Welsh Summary Creator')
+        # st.markdown("#### Enter your text below:")
+        # option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
+        # if option == 'Use an example text':           
+           # example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR)
+                                                  # if f.startswith(('en','ex'))]))
+           # with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+               # example_text = example_file.read()
+               # input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
+        # elif option == 'Upload a text file':
+            # text = uploadfile()
+            # input_text = st.text_area('Summarise uploaded text:', text, height=300)
+        # else:
+            # input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
 
-        chosen_ratio = st.sidebar.slider('Select summary ratio [10% to 50%]',  min_value=10, max_value=50, step=10)/100
-        if st.button("Summarise👈"):
-            if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
-                summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                if summary:
-                    st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
-                else:
-                    st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
-            else:
-              st.write('Please select an example, or paste/upload your text')
+        # chosen_ratio = st.sidebar.slider('Select summary ratio [10% to 50%]',  min_value=10, max_value=50, step=10)/100
+        # if st.button("Summarise👈"):
+            # if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
+                # summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                # if summary:
+                    # st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                # else:
+                    # st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
+            # else:
+              # st.write('Please select an example, or paste/upload your text')
 
 # #=========================
 # example_text = """Mae Erthygl 25 o Ddatganiad Cyffredinol Hawliau Dynol 1948 y Cenhedloedd Unedig yn nodi: Mae gan bawb yr hawl i safon byw sy'n ddigonol ar gyfer iechyd a lles ei hun a'i deulu, gan gynnwys bwyd, dillad, tai a gofal meddygol a gwasanaethau cymdeithasol angenrheidiol. Mae'r Datganiad Cyffredinol yn cynnwys lletyaeth er mwyn diogelu person ac mae hefyd yn sôn yn arbennig am y gofal a roddir i'r rheini sydd mewn mamolaeth neu blentyndod. Ystyrir mai Datganiad Cyffredinol o Hawliau Dynol fel y datganiad rhyngwladol cyntaf o hawliau dynol sylfaenol. Dywedodd Uchel Gomisiynydd y Cenhedloedd Unedig dros Hawliau Dynol Navanethem Pillay fod y Datganiad Cyffredinol o Hawliau Dynol yn ymgorffori gweledigaeth sy'n gofyn am gymryd yr holl hawliau dynol - sifil, gwleidyddol, economaidd, cymdeithasol neu ddiwylliannol - fel cyfanwaith anwahanadwy ac organig, anwahanadwy a rhyngddibynnol"""

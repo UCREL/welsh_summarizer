@@ -15,7 +15,7 @@ nltk.download('stopwords')
 
 EXAMPLES_DIR = 'example_texts_pub'
 
-st.write(" ".join(os.listdir()))
+
 ## Define summarizer models
 # text_rank
 def text_rank_summarize(article, ratio):
@@ -85,7 +85,9 @@ def run_summarizer():
         # st.markdown('### 🌷 Adnodd Creu Crynodebau')
         st.markdown("#### Rhowch eich testun isod:")
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
+        
         if option == 'Defnyddiwch destun enghreifftiol':
+            st.write(" ".join(os.listdir()))
            example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy','ex'))]))
 
            with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:

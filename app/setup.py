@@ -87,7 +87,7 @@ def run_summarizer():
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
         
         if option == 'Defnyddiwch destun enghreifftiol':
-            st.write(" ".join(os.listdir()))
+           st.write(" ".join(os.listdir()))
            example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy','ex'))]))
 
            with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:

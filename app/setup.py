@@ -15,6 +15,7 @@ nltk.download('stopwords')
 
 EXAMPLES_DIR = 'example_texts_pub'
 
+st.write(" ".join(os.listdir()))
 ## Define summarizer models
 # text_rank
 def text_rank_summarize(article, ratio):

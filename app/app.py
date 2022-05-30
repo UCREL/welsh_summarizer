@@ -12,8 +12,6 @@ st.set_page_config(
      }
  )
 
-# st.sidebar.markdown('# 🌼 Welsh FreeTxt')
-
 run_summarizer()
 
 # language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])

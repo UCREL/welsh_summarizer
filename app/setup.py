@@ -15,7 +15,6 @@ nltk.download('stopwords')
 
 EXAMPLES_DIR = 'example_texts_pub'
 
-
 ## Define summarizer models
 # text_rank
 def text_rank_summarize(article, ratio):
@@ -87,10 +86,9 @@ def run_summarizer():
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
         
         if option == 'Defnyddiwch destun enghreifftiol':
-           st.write(" ".join(os.listdir()))
            example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy','ex'))]))
 
-           with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+           with open(os.path.join('app', EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
                example_text = example_file.read()
 
            input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)

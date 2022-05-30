@@ -12,6 +12,8 @@ st.set_page_config(
      }
  )
 
+EXAMPLES_DIR = 'example_texts_pub'
+
 # run_summarizer()
 language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
 with st.expander("ℹ️ - About this app", expanded=False):

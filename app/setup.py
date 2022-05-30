@@ -13,7 +13,7 @@ from summa.summarizer import summarize as summa_summarizer
 nltk.download('punkt') # one time execution
 nltk.download('stopwords')
 
-EXAMPLES_DIR = 'example_texts_pub'
+EXAMPLES_DIR = './example_texts_pub'
 
 ## Define summarizer models
 # text_rank

@@ -81,7 +81,7 @@ def run_summarizer():
         )
 
     if language=='Cymraeg':
-        st.markdown('### 🌷 Adnodd Creu Crynodebau')
+        # st.markdown('### 🌷 Adnodd Creu Crynodebau')
         st.markdown("#### Rhowch eich testun isod:")
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
         if option == 'Defnyddiwch destun enghreifftiol':

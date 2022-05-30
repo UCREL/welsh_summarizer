@@ -16,10 +16,10 @@ st.sidebar.markdown('# 🌼 Welsh FreeTxt')
 
 #📃📌📈📈📉⛱🏓🏆🎲 
 
-task = '📃 Summarizer'
+# task = '📃 Summarizer'
 
-if task == '📃 Summarizer':
-    run_visualizer()
+# if task == '📃 Summarizer':
+run_summarizer()
 # elif task == '📃 Summarizer':
     # run_summarizer()
 # elif task == '📉 Analyzer':

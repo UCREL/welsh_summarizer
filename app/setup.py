@@ -13,7 +13,7 @@ from summa.summarizer import summarize as summa_summarizer
 nltk.download('punkt') # one time execution
 nltk.download('stopwords')
 
-EXAMPLES_DIR = './example_texts_pub'
+EXAMPLES_DIR = 'example_texts_pub'
 
 ## Define summarizer models
 # text_rank
@@ -85,8 +85,8 @@ def run_summarizer():
         st.markdown("#### Rhowch eich testun isod:")
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
         if option == 'Defnyddiwch destun enghreifftiol':
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR)
-                                                  if f.startswith(('cy','ex'))]))
+           example_fname = st.sidebar.selectbox('Select example text:', 
+                    sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy','ex'))]))
 
            with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
                example_text = example_file.read()

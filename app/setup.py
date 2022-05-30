@@ -31,52 +31,14 @@ def uploadfile():
     else:
         return '<Please upload your file ...>'
 
-#-----------Get Top n most_common words plus counts--------
-@st.cache
-def getTopNWords(t, n=5):
-    t = [w for w in t.lower().split() if (w not in STOPWORDS and w not in PUNCS)]
-    return Counter(t).most_common(n)
-    # return [f"{w} ({c})" for w, c in Counter(t).most_common(n)]
-
-
-#------------------------ keyword in context ------------------------
-@st.cache
-def get_kwic(text, keyword, window_size=1, maxInstances=10, lower_case=False):
-    text = text.translate(text.maketrans("", "", string.punctuation))
-    if lower_case:
-        text = text.lower()
-        keyword = keyword.lower()
-    kwic_insts = []
-    tokens = text.split()
-    keyword_indexes = [i for i in range(len(tokens)) if tokens[i].lower() ==keyword.lower()]
-    for index in keyword_indexes[:maxInstances]:
-        left_context = ' '.join(tokens[index-window_size:index])
-        target_word = tokens[index]
-        right_context = ' '.join(tokens[index+1:index+window_size+1])
-        kwic_insts.append((left_context, target_word, right_context))
-    return kwic_insts
-
-#-------------------------- N-gram Generator ---------------------------
-@st.cache
-def gen_ngram(text, n=2, top=10):
-    _ngrams=[]
-    if n==1:
-        return getTopNWords(text, top)
-    for sent in sent_tokenize(text):
-        for char in sent:
-            if char in PUNCS: sent = sent.replace(char, "")
-        _ngrams += ngrams(word_tokenize(sent),n)
-    return [(f"{' '.join(ng):>27s}", c) 
-            for ng, c in Counter(_ngrams).most_common(top)]
-
 #apps------------------------------------------------------------------
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     with st.expander("ℹ️ - About this app", expanded=False):
         st.markdown(
             """     
-            -   This tool adapts the app from the [Welsh Summarization] (https://github.com/UCREL/welsh-summarization-dataset) project!
-            -   It performs simple extractive summarisation with the [TextRank]() alrogithm.
+            - This tool is part of the [Welsh Summarization Dataset](https://github.com/UCREL/welsh-summarization-dataset) project!
+            - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
             """
         )
 

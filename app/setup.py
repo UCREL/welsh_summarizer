@@ -23,8 +23,12 @@ def text_rank_summarize(article, ratio):
 #helper functions---------------------------------------------------
 
 #------------------------- uploading file ---------------------------
-def uploadfile():
-    uploaded_file = st.file_uploader("Choose a text file")
+def uploadfile(lang='cy'):
+    if lang='cy':
+        uploaded_file = st.file_uploader("Dewiswch ffeil destun")
+    else:
+        uploaded_file = st.file_uploader("Choose a text file")
+        
     if uploaded_file is not None:
         stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
         return stringio.read()
@@ -34,19 +38,20 @@ def uploadfile():
 #apps------------------------------------------------------------------
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
-    with st.expander("ℹ️ - About this app", expanded=False):
-        st.markdown(
-            """     
-            - This tool is part of the [Welsh Summarization Dataset](https://github.com/UCREL/welsh-summarization-dataset) project!
-            - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
-            """
-        )
-
     if language=='Cymraeg':
         # st.markdown('### 🌷 Adnodd Creu Crynodebau')
+        with st.expander("ℹ️ - Gwybodaeth am yr ap hwn", expanded=False):
+            st.markdown(
+                """
+                - Mae’r adnodd hwn yn rhan o brosiect [Adnodd Creu Crynodebau](https://corcencc.org/acc/) (ACC)!
+                - Mae’n cynhyrchu crynodeb echdynnol syml gan ddefnyddio algorithm  [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf).
+                - Mae’r set ddata ar gael drwy [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
+                """
+            )
+
         st.sidebar.markdown('### 🌷 Adnodd Creu Crynodebau')
         # st.markdown("#### Rhowch eich testun isod:")
-        option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
+        option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
         
         if option == 'Defnyddiwch destun enghreifftiol':
            example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy','ex'))]))
@@ -75,6 +80,15 @@ def run_summarizer():
                 st.write("Rhowch eich testun...(Please enter your text...)")
 
     else: #English
+        with st.expander("ℹ️ - About this app", expanded=False):
+            st.markdown(
+                """
+                - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
+                - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
+                - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
+                """
+            )
+
         # st.markdown('### 🌷 Welsh Summary Creator')
         st.sidebar.markdown('### 🌷 Welsh Summary Creator')
         # st.markdown("#### Enter your text below:")
@@ -85,7 +99,7 @@ def run_summarizer():
                example_text = example_file.read()
                input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
         elif option == 'Upload a text file':
-            text = uploadfile()
+            text = uploadfile(lang='en')
             input_text = st.text_area('Summarise uploaded text:', text, height=300)
         else:
             input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)

@@ -61,7 +61,7 @@ def run_summarizer():
 
            input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
         
-        elif option == 'Llwythwch ffeil testun i fyny':
+        elif option == 'Uwchlwythwch ffeil destun':
             text = uploadfile()
             input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
 

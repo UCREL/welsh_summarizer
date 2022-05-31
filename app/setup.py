@@ -24,7 +24,7 @@ def text_rank_summarize(article, ratio):
 
 #------------------------- uploading file ---------------------------
 def uploadfile(lang='cy'):
-    if lang='cy':
+    if lang=='cy':
         uploaded_file = st.file_uploader("Dewiswch ffeil destun")
     else:
         uploaded_file = st.file_uploader("Choose a text file")

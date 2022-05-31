@@ -12,6 +12,4 @@ st.set_page_config(
      }
  )
 
-st.sidebar.markdown('## 🌷 Adnodd Creu Crynodebau')
-
 run_summarizer()

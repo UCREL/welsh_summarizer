@@ -44,6 +44,7 @@ def run_summarizer():
 
     if language=='Cymraeg':
         # st.markdown('### 🌷 Adnodd Creu Crynodebau')
+        st.sidebar.markdown('### 🌷 Adnodd Creu Crynodebau')
         st.markdown("#### Rhowch eich testun isod:")
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Llwythwch ffeil testun i fyny'))
         
@@ -74,7 +75,8 @@ def run_summarizer():
                 st.write("Rhowch eich testun...(Please enter your text...)")
 
     else: #English
-        st.markdown('### 🌷 Welsh Summary Creator')
+        # st.markdown('### 🌷 Welsh Summary Creator')
+        st.sidebar.markdown('### 🌷 Welsh Summary Creator')
         st.markdown("#### Enter your text below:")
         option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
         if option == 'Use an example text':           

@@ -26,14 +26,15 @@ def text_rank_summarize(article, ratio):
 def uploadfile(lang='cy'):
     if lang=='cy':
         uploaded_file = st.file_uploader("Dewiswch ffeil destun")
+        return_msg = '<Uwchlwythwch eich ffeil...>'
     else:
         uploaded_file = st.file_uploader("Choose a text file")
-        
+        return_msg = '<Please upload your file ...>'
     if uploaded_file is not None:
         stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
         return stringio.read()
     else:
-        return '<Please upload your file ...>'
+        return return_msg
 
 #apps------------------------------------------------------------------
 def run_summarizer():

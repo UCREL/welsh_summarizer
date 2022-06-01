@@ -64,7 +64,6 @@ def run_summarizer():
         
         elif option == 'Uwchlwythwch ffeil destun':
             text = uploadfile()
-            # st.write(text)
             input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
 
         else:

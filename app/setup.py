@@ -36,6 +36,18 @@ def uploadfile(lang='cy'):
     else:
         return return_msg
 
+def upload_multiple_files(lang='cy'):
+    if lang=='cy':
+        uploaded_files = st.file_uploader("Dewiswch ffeil destun", accept_multiple_files=True)
+        return_msg = '<Uwchlwythwch eich ffeil...>'
+    else:
+        uploaded_files = st.file_uploader("Select file(s) to upload", accept_multiple_files=True)
+        return_msg = '<Please upload your file ...>'
+    bytes_data = ''
+    for uploaded_file in uploaded_files:
+        bytes_data += uploaded_file.read().decode("utf-8") 
+    return bytes_data
+
 #apps------------------------------------------------------------------
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
@@ -63,7 +75,7 @@ def run_summarizer():
            input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
         
         elif option == 'Uwchlwythwch ffeil destun':
-            text = uploadfile()
+            text = upload_multiple_files()
             input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
 
         else:
@@ -100,7 +112,7 @@ def run_summarizer():
                example_text = example_file.read()
                input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
         elif option == 'Upload a text file':
-            text = uploadfile(lang='en')
+            text = upload_multiple_files(lang='en')
             input_text = st.text_area('Summarise uploaded text:', text, height=300)
         else:
             input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)

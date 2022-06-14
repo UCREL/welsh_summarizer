@@ -67,7 +67,7 @@ def run_summarizer():
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
         
         if option == 'Defnyddiwch destun enghreifftiol':
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy'))]))
+           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
 
            with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
                example_text = example_file.read()
@@ -107,7 +107,7 @@ def run_summarizer():
         # st.markdown("#### Enter your text below:")
         option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
         if option == 'Use an example text':           
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith(('cy'))]))
+           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
            with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
                example_text = example_file.read()
                input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)

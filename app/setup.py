@@ -126,4 +126,4 @@ def run_summarizer():
                   st.write('Please select an example, or paste/upload your text')
             summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
         else:# Abstractive Summarizer
-            pass
+            st.markdown('#### 🌷 Abstractive Summarizer')

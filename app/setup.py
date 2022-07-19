@@ -90,8 +90,7 @@ def run_summarizer():
                 st.write("Rhowch eich testun...(Please enter your text...)")
 
     else: #English
-        summarizer_type = 'Extractive - TextRank'
-        
+        summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
         if summarizer_type == 'Extractive - TextRank':
             with st.expander("ℹ️ - About this app", expanded=False):
                 st.markdown(
@@ -124,6 +123,5 @@ def run_summarizer():
                         st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
                 else:
                   st.write('Please select an example, or paste/upload your text')
-            summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
         else:# Abstractive Summarizer
             st.markdown('#### 🌷 Abstractive Summarizer')

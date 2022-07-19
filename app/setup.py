@@ -101,10 +101,7 @@ def run_summarizer():
                 - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
                 """
             )
-
-        # st.markdown('### 🌷 Welsh Summary Creator')
         st.sidebar.markdown('### 🌷 Welsh Summary Creator')
-        # st.markdown("#### Enter your text below:")
         option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
         if option == 'Use an example text':           
            example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
@@ -127,3 +124,5 @@ def run_summarizer():
                     st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
             else:
               st.write('Please select an example, or paste/upload your text')
+        
+        summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))

@@ -15,12 +15,9 @@ nltk.download('stopwords')
 
 EXAMPLES_DIR = 'app/example_texts_pub'
 
-## Define summarizer models
 # text_rank
 def text_rank_summarize(article, ratio):
   return summa_summarizer(article, ratio=ratio)
-
-#helper functions---------------------------------------------------
 
 #------------------------- uploading file ---------------------------
 def uploadfile(lang='cy'):
@@ -48,7 +45,7 @@ def upload_multiple_files(lang='cy'):
         bytes_data += uploaded_file.read().decode("utf-8") 
     return bytes_data
 
-#apps------------------------------------------------------------------
+#---------------------------------apps------------------------------
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     if language=='Cymraeg':
@@ -93,36 +90,40 @@ def run_summarizer():
                 st.write("Rhowch eich testun...(Please enter your text...)")
 
     else: #English
-        with st.expander("ℹ️ - About this app", expanded=False):
-            st.markdown(
-                """
-                - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
-                - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
-                - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
-                """
-            )
-        st.sidebar.markdown('### 🌷 Welsh Summary Creator')
-        option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-        if option == 'Use an example text':           
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
-           with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
-               example_text = example_file.read()
-               input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
-        elif option == 'Upload a text file':
-            text = upload_multiple_files(lang='en')
-            input_text = st.text_area('Summarise uploaded text:', text, height=300)
-        else:
-            input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
-
-        chosen_ratio = st.sidebar.slider('Select summary ratio [10% to 50%]',  min_value=10, max_value=50, step=10)/100
-        if st.button("Summarise👈"):
-            if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
-                summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                if summary:
-                    st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
-                else:
-                    st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
-            else:
-              st.write('Please select an example, or paste/upload your text')
+        summarizer_type = 'Extractive - TextRank'
         
-        summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
+        if summarizer_type == 'Extractive - TextRank':
+            with st.expander("ℹ️ - About this app", expanded=False):
+                st.markdown(
+                    """
+                    - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
+                    - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
+                    - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
+                    """
+                )
+            st.sidebar.markdown('### 🌷 Welsh Summary Creator')
+            option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
+            if option == 'Use an example text':           
+               example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+               with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+                   example_text = example_file.read()
+                   input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
+            elif option == 'Upload a text file':
+                text = upload_multiple_files(lang='en')
+                input_text = st.text_area('Summarise uploaded text:', text, height=300)
+            else:
+                input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
+
+            chosen_ratio = st.sidebar.slider('Select summary ratio [10% to 50%]',  min_value=10, max_value=50, step=10)/100
+            if st.button("Summarise👈"):
+                if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
+                    summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                    if summary:
+                        st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                    else:
+                        st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
+                else:
+                  st.write('Please select an example, or paste/upload your text')
+            summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
+        else:# Abstractive Summarizer
+            pass

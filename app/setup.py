@@ -49,7 +49,6 @@ def upload_multiple_files(lang='cy'):
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     if language=='Cymraeg':
-        # st.markdown('### 🌷 Adnodd Creu Crynodebau')
         with st.expander("ℹ️ - Gwybodaeth am yr ap hwn", expanded=False):
             st.markdown(
                 """
@@ -124,4 +123,21 @@ def run_summarizer():
                 else:
                   st.write('Please select an example, or paste/upload your text')
         else:# Abstractive Summarizer
-            st.markdown('#### 🌷 Abstractive Summarizer')
+            st.markdown('#### 🌷 Abstractive Summarizer 0.0.1 (Alpha Version)')
+            with st.expander("ℹ️ - About this app", expanded=False):
+                st.markdown(
+                    """
+                    - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
+                    - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
+                    """
+                )
+            if option == 'Use an example text':
+                example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+                with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+                   example_text = example_file.read()
+                   input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
+                elif option == 'Upload a text file':
+                    text = upload_multiple_files(lang='en')
+                    input_text = st.text_area('Summarise uploaded text:', text, height=300)
+                else:
+                    input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)

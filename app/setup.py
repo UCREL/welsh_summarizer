@@ -117,9 +117,7 @@ def run_summarizer():
                 """
             )
         option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-        
-        input_text = get_input_text(option)
-        
+        input_text = get_input_text(option, lang=lang)
         if st.button(MESSAGES[f'{lang}.button']):
             st.warning('This may take a while. Please bear with us 😉')
             if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:

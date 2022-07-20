@@ -120,7 +120,7 @@ def run_summarizer():
                 """
             )
         # option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-        option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8]', MESSAGES[lang][9], MESSAGES[lang][10]))
+        option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
         if st.button(MESSAGES[f'{lang}.button']):
             st.warning('This may take a while. Please bear with us 😉')

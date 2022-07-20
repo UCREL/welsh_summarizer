@@ -81,21 +81,21 @@ def run_summarizer():
 
         st.sidebar.markdown('### 🌷 Adnodd Creu Crynodebau')
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
+        input_text = get_input_text(option)
+        # if option == 'Defnyddiwch destun enghreifftiol':
+           # example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+
+           # with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+               # example_text = example_file.read()
+
+           # input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
         
-        if option == 'Defnyddiwch destun enghreifftiol':
-           example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+        # elif option == 'Uwchlwythwch ffeil destun':
+            # text = upload_multiple_files()
+            # input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
 
-           with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
-               example_text = example_file.read()
-
-           input_text = st.text_area('Crynhowch y testun enghreifftiol yn y blwch:', example_text, height=300)
-        
-        elif option == 'Uwchlwythwch ffeil destun':
-            text = upload_multiple_files()
-            input_text = st.text_area("Crynhoi testun wedi'i uwchlwytho:", text, height=300)
-
-        else:
-            input_text = st.text_area('Teipiwch neu gludwch eich testun yn y blwch testun', '<Rhowch eich testun...>')
+        # else:
+            # input_text = st.text_area('Teipiwch neu gludwch eich testun yn y blwch testun', '<Rhowch eich testun...>')
 
         chosen_ratio = st.sidebar.slider('Dewiswch gymhareb y crynodeb [10% i 50%]:', min_value=10, max_value=50, step=10)/100
         if st.button("Crynhoi👈"):

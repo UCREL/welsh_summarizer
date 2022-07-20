@@ -96,7 +96,7 @@ def run_summarizer():
             st.markdown(MESSAGES[f'{lang}.md'])
         st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
         # option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
-        option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8]', MESSAGES[lang][9], MESSAGES[lang][10]))
+        option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
         chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10)/100
 

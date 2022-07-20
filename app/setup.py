@@ -122,16 +122,18 @@ def run_summarizer():
             st.sidebar.markdown('### 🌷 Welsh Summary Creator')
             
             option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-            if option == 'Use an example text':           
-               example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
-               with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
-                   example_text = example_file.read()
-                   input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
-            elif option == 'Upload a text file':
-                text = upload_multiple_files(lang='en')
-                input_text = st.text_area('Summarise uploaded text:', text, height=300)
-            else:
-                input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
+            
+            input_text = get_input_text(option, lang='en')
+            # if option == 'Use an example text':           
+               # example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+               # with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+                   # example_text = example_file.read()
+                   # input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
+            # elif option == 'Upload a text file':
+                # text = upload_multiple_files(lang='en')
+                # input_text = st.text_area('Summarise uploaded text:', text, height=300)
+            # else:
+                # input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
 
             chosen_ratio = st.sidebar.slider('Select summary ratio [10% to 50%]',  min_value=10, max_value=50, step=10)/100
             if st.button("Summarise👈"):

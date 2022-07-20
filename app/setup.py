@@ -142,3 +142,16 @@ def run_summarizer():
                 input_text = st.text_area('Summarise uploaded text:', text, height=300)
             else:
                 input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
+            
+            if st.button("Summarise👈"):
+                if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
+                    # summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                    summary = 'Insert code for abstractive summarization here...'
+                    if summary:
+                        # st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                        st.write(summary)
+                    else:
+                        # st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
+                        st.write("Well, this should not happen.")
+                else:
+                  st.write('Please select an example, or paste/upload your text')

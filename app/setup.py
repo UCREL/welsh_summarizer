@@ -17,7 +17,7 @@ nltk.download('stopwords')
 EXAMPLES_DIR = 'app/example_texts_pub'
 
 MESSAGES = {'cy':["Defnyddiwch destun enghreifftiol", "Dewiswch destun enghreifftiol:", "Crynhowch y testun enghreifftiol yn y blwch:", "Uwchlwythwch ffeil destun", "Crynhoi testun wedi'i uwchlwytho:", "Teipiwch neu gludwch eich testun yn y blwch testun", "Rhowch eich testun..."],
-	  'en':["Use an example text", 'Select example text:',"Summarise the example text in the box:", "Upload a text file", "Summarise uploaded text:", "Type or paste your text into the text box:", "Please enter your text..."]
+	  'en':["Use an example text", 'Select example text:',"Summarise the example text in the box:", "Upload a text file", "Summarise uploaded text:", "Type or paste your text into the text box:", "Please enter your text..."]}
 
 def get_input_text(option, lang='cy'):
 	input_text=''

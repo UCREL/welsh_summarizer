@@ -16,6 +16,25 @@ nltk.download('stopwords')
 
 EXAMPLES_DIR = 'app/example_texts_pub'
 
+MESSAGES = {'cy':["Defnyddiwch destun enghreifftiol", "Dewiswch destun enghreifftiol:", "Crynhowch y testun enghreifftiol yn y blwch:", "Uwchlwythwch ffeil destun", "Crynhoi testun wedi'i uwchlwytho:", "Teipiwch neu gludwch eich testun yn y blwch testun", "Rhowch eich testun..."],
+	  'en':["Use an example text", 'Select example text:',"Summarise the example text in the box:", "Upload a text file", "Summarise uploaded text:", "Type or paste your text into the text box:", "Please enter your text..."]
+
+def get_input_text(option, lang='cy'):
+	input_text=''
+	if option == MESSAGES[lang][0]:
+		example_fname = st.sidebar.selectbox(MESSAGES[lang][1], sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+		with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+				example_text = example_file.read()
+		input_text = st.text_area(MESSAGES[lang][2], example_text, height=300)
+
+	elif option == MESSAGES[lang][3]:
+		text = upload_multiple_files()
+		input_text = st.text_area(MESSAGES[lang][4], text, height=300)
+	else:
+		input_text = st.text_area(MESSAGES[lang][5], MESSAGES[lang][6])
+	return input_text
+
+
 # text_rank
 def text_rank_summarize(article, ratio):
   return summa_summarizer(article, ratio=ratio)
@@ -46,6 +65,7 @@ def upload_multiple_files(lang='cy'):
         bytes_data += uploaded_file.read().decode("utf-8") 
     return bytes_data
 
+
 #---------------------------------apps------------------------------
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
@@ -60,7 +80,6 @@ def run_summarizer():
             )
 
         st.sidebar.markdown('### 🌷 Adnodd Creu Crynodebau')
-        # st.markdown("#### Rhowch eich testun isod:")
         option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
         
         if option == 'Defnyddiwch destun enghreifftiol':
@@ -101,6 +120,7 @@ def run_summarizer():
                     """
                 )
             st.sidebar.markdown('### 🌷 Welsh Summary Creator')
+            
             option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
             if option == 'Use an example text':           
                example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
@@ -145,9 +165,8 @@ def run_summarizer():
                 input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
             
             if st.button("Summarise👈"):
+                st.warning('This may take a while. Please bear with us 😉')
                 if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
-                    # summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                    # summary = 'Insert code for abstractive summarization here...'
                     summary = t5_summarize('ignatius/cyT5-small', input_text)
                     if summary:
                         # st.write(text_rank_summarize(input_text, ratio=chosen_ratio))

@@ -9,3 +9,4 @@ matplotlib
 wordcloud
 sentencepiece != 0.1.92
 transformers
+torch

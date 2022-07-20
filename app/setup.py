@@ -46,7 +46,7 @@ def get_input_text(option, lang='cy'):
 		input_text = st.text_area(MESSAGES[lang][2], example_text, height=300)
 
 	elif option == MESSAGES[lang][3]:
-		text = upload_multiple_files()
+		text = upload_multiple_files(lang=lang)
 		input_text = st.text_area(MESSAGES[lang][4], text, height=300)
 	else:
 		input_text = st.text_area(MESSAGES[lang][5], MESSAGES[lang][6])
@@ -87,92 +87,56 @@ def upload_multiple_files(lang='cy'):
 #---------------------------------apps------------------------------
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
-    # if language=='Cymraeg':
     lang = 'cy' if language == 'Cymraeg' else 'en'
-    with st.expander("ℹ️ - Gwybodaeth am yr ap hwn", expanded=False):
-        st.markdown(MESSAGES[f'{lang}.md'])
-        
-        # st.markdown(
-            # """
-            # - Mae’r adnodd hwn yn rhan o brosiect [Adnodd Creu Crynodebau](https://corcencc.org/acc/) (ACC)!
-            # - Mae’n cynhyrchu crynodeb echdynnol syml gan ddefnyddio algorithm  [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf).
-            # - Mae’r set ddata ar gael drwy [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
-            # """
-        # )
+    summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
+    if summarizer_type == 'Extractive - TextRank':
+        with st.expander("ℹ️ - Gwybodaeth am yr ap hwn", expanded=False):
+            st.markdown(MESSAGES[f'{lang}.md'])
+        st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
+        option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
+        input_text = get_input_text(option, lang=lang)
+        chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10)/100
 
-    # st.sidebar.markdown('### 🌷 Adnodd Creu Crynodebau')
-    st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
-    option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
-    input_text = get_input_text(option)
-
-    # chosen_ratio = st.sidebar.slider('Dewiswch gymhareb y crynodeb [10% i 50%]:', min_value=10, max_value=50, step=10)/100
-    chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10)/100
-
-    if st.button(MESSAGES[f'{lang}.button']):
-        if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':
-            summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-            if summary:
-                st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+        if st.button(MESSAGES[f'{lang}.button']):
+            if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':
+                summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                if summary:
+                    st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                else:
+                    st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
             else:
-                st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
-        else:
-            st.write("Rhowch eich testun...(Please enter your text...)")
-    
-    # else: #English
-        # summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
-        # if summarizer_type == 'Extractive - TextRank':
-            # with st.expander("ℹ️ - About this app", expanded=False):
-                # st.markdown(
-                    # """
-                    # - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
-                    # - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
-                    # - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
-                    # """
-                # )
-            # st.sidebar.markdown('### 🌷 Welsh Summary Creator')
-            
-            # option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-            
-            # input_text = get_input_text(option, lang='en')
+                st.write("Rhowch eich testun...(Please enter your text...)")
 
-            # chosen_ratio = st.sidebar.slider('Select summary ratio [10% to 50%]',  min_value=10, max_value=50, step=10)/100
-            # if st.button("Summarise👈"):
-                # if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
-                    # summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                    # if summary:
-                        # st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
-                    # else:
-                        # st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
-                # else:
-                  # st.write('Please select an example, or paste/upload your text')
-        # else:# Abstractive Summarizer
-            # st.markdown('#### 🌷 Abstractive Summarizer 0.0.1 (Alpha Version)')
-            # with st.expander("ℹ️ - About this app", expanded=False):
-                # st.markdown(
-                    # """
-                    # - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
-                    # - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
-                    # """
-                # )
-            # option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
-            # if option == 'Use an example text':
-                # example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
-                # with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
-                   # example_text = example_file.read()
-                   # input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
-            # elif option == 'Upload a text file':
-                # text = upload_multiple_files(lang='en')
-                # input_text = st.text_area('Summarise uploaded text:', text, height=300)
-            # else:
-                # input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
-            
-            # if st.button("Summarise👈"):
-                # st.warning('This may take a while. Please bear with us 😉')
-                # if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
-                    # summary = t5_summarize('ignatius/cyT5-small', input_text)
-                    # if summary:
-                        # st.write(summary)
-                    # else:
-                        # st.write("Well, this should not happen.")
-                # else:
-                  # st.write('Please select an example, or paste/upload your text')
+    else: # Abstractive Summarizer
+        st.markdown('#### 🌷 Abstractive Summarizer 0.0.1 (Alpha Version)')
+        with st.expander("ℹ️ - About this app", expanded=False):
+            st.markdown(
+                """
+                - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
+                - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
+                """
+            )
+        option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
+        
+        input_text = get_input_text(option, lang=lang)
+        # if option == 'Use an example text':
+            # example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
+            # with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+               # example_text = example_file.read()
+               # input_text = st.text_area('Summarise the example text in the box:', example_text, height=300)
+        # elif option == 'Upload a text file':
+            # text = upload_multiple_files(lang='en')
+            # input_text = st.text_area('Summarise uploaded text:', text, height=300)
+        # else:
+            # input_text = st.text_area('Type or paste your text into the text box:', '<Please enter your text...>', height=300)
+        
+        if st.button(MESSAGES[f'{lang}.button']):
+            st.warning('This may take a while. Please bear with us 😉')
+            if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
+                summary = t5_summarize('ignatius/cyT5-small', input_text)
+                if summary:
+                    st.write(summary)
+                else:
+                    st.write("Well, this should not happen.")
+            else:
+              st.write('Please select an example, or paste/upload your text')

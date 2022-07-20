@@ -101,14 +101,14 @@ def run_summarizer():
         # )
 
     # st.sidebar.markdown('### 🌷 Adnodd Creu Crynodebau')
-    st.sidebar.markdown(f'{lang}.sb.md')
+    st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
     option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
     input_text = get_input_text(option)
 
     # chosen_ratio = st.sidebar.slider('Dewiswch gymhareb y crynodeb [10% i 50%]:', min_value=10, max_value=50, step=10)/100
-    chosen_ratio = st.sidebar.slider(f'{lang}.sb.sl', min_value=10, max_value=50, step=10)/100
+    chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10)/100
 
-    if st.button(f'{lang}.button'):
+    if st.button(MESSAGES[f'{lang}.button']):
         if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':
             summary = text_rank_summarize(input_text, ratio=chosen_ratio)
             if summary:

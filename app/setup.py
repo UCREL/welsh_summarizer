@@ -147,7 +147,8 @@ def run_summarizer():
             if st.button("Summarise👈"):
                 if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
                     # summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                    summary = 'Insert code for abstractive summarization here...'
+                    # summary = 'Insert code for abstractive summarization here...'
+                    summary = t5_summarize('ignatius/cyT5-small', text)
                     if summary:
                         # st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
                         st.write(summary)

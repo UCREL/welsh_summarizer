@@ -131,7 +131,7 @@ def run_summarizer():
                     - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
                     """
                 )
-            from cyT5_summarizer import t5_summarize
+            from cyt5_summarizer import t5_summarize
             option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
             if option == 'Use an example text':
                 example_fname = st.sidebar.selectbox('Select example text:', sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))

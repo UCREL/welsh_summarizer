@@ -19,12 +19,14 @@ EXAMPLES_DIR = 'app/example_texts_pub'
 MESSAGES = {
     'cy.md': """
             - Mae’r adnodd hwn yn rhan o brosiect [Adnodd Creu Crynodebau](https://corcencc.org/acc/) (ACC)!
-            - Mae’n cynhyrchu crynodeb echdynnol syml gan ddefnyddio algorithm  [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf).
+            - Mae’r adnodd echdynnol yn cynhyrchu crynodeb echdynnol syml gan ddefnyddio algorithm  [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf).
+            - Mae’r adnodd haniaethol yn ceisio 'deall' y testun er mwyn creu crynodeb heb gopïo’r testun gwreiddiol. Mae’n seiliedig ar seilwaith Text-to-Text Transfer Transformer (T5) ac fe’i chrewyd gan addasu model mT5 Google. Gan ystyried cymhlethdod yr adnodd hwn, mae angen datblygiad pellach arno.
             - Mae’r set ddata ar gael drwy [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
             """,
     'en.md': """
             - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
-            - It performs simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
+            - The *Extractive* tool produces a simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
+            - The *Abstractive* tool tries to 'understand' the text and create a summary without copying the original. This is based on the [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) architecture and was created by adapting the Google mT5 model. Given the complexity of this tool, it requires further development.
             - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
              """,
     'cy.sb.md': '### 🌷 Adnodd Creu Crynodebau',
@@ -33,6 +35,16 @@ MESSAGES = {
     'en.sb.sl': 'Select summary ratio [10% to 50%]',
     'cy.button': 'Crynhoi👈',
     'en.button': 'Summarize👈',
+    'cy.info.title': 'ℹ️ - Gwybodaeth am yr ap hwn',
+    'en.info.title': 'ℹ️ - About this app',
+    'cy.summary.type': 'Math o grynodeb',
+    'en.summary.type': 'Summary type',
+    'cy.abstractive': 'Haniaethol',
+    'en.abstractive': 'Abstractive',
+    'cy.extractive': 'Echdynnol',
+    'en.extractive': 'Extractive',
+    'cy.abs.warning': 'Gall hyn gymryd peth amser. Diolch am fod yn amyneddgar 😉.',
+    'en.abs.warning': 'This may take a while. Please bear with us 😉.',
     'cy':["Defnyddiwch destun enghreifftiol", "Dewiswch destun enghreifftiol:", "Crynhowch y testun enghreifftiol yn y blwch:", "Uwchlwythwch ffeil destun",
           "Crynhoi testun wedi'i uwchlwytho:", "Teipiwch neu gludwch eich testun yn y blwch testun", "Rhowch eich testun...", 'Sut ydych chi am fewnbynnu eich testun?',
           'Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'],
@@ -90,9 +102,10 @@ def upload_multiple_files(lang='cy'):
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
-    summarizer_type = st.sidebar.radio('Summarizer type:', ('Extractive - TextRank', 'Abstractive - CyT5Small'))
+    summarizer_type = st.sidebar.radio('Summarizer type:',
+                        (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
     if summarizer_type == 'Extractive - TextRank':
-        with st.expander("ℹ️ - Gwybodaeth am yr ap hwn", expanded=False):
+        with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
         st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
         # option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
@@ -112,18 +125,21 @@ def run_summarizer():
 
     else: # Abstractive Summarizer
         st.markdown('#### 🌷 Abstractive Summarizer 0.0.1 (Alpha Version)')
-        with st.expander("ℹ️ - About this app", expanded=False):
-            st.markdown(
-                """
-                - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
-                - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
-                """
-            )
+        with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
+            st.markdown(MESSAGES[f'{lang}.md'])
+            
+            # st.markdown(
+                # """
+                # - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
+                # - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
+                # """
+            # )
         # option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
+        
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
         if st.button(MESSAGES[f'{lang}.button']):
-            st.warning('This may take a while. Please bear with us 😉')
+            st.warning(MESSAGES[f'{lang}.abs.warning'])
             if input_text and input_text not in ['<Please enter your text...>','<Please upload your file ...>']:
                 summary = t5_summarize('ignatius/cyT5-small', input_text)
                 if summary:
@@ -132,3 +148,4 @@ def run_summarizer():
                     st.write("Well, this should not happen.")
             else:
               st.write('Please select an example, or paste/upload your text')
+              

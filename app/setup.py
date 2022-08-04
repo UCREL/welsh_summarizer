@@ -102,12 +102,12 @@ def upload_multiple_files(lang='cy'):
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
+    st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
     summarizer_type = st.sidebar.radio('Summarizer type:',
                         (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
     if summarizer_type == 'Extractive - TextRank':
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
-        st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
         # option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)

@@ -105,7 +105,7 @@ def run_summarizer():
     st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
     summarizer_type = st.sidebar.radio('Summarizer type:',
                         (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
-    if summarizer_type == 'Extractive - TextRank':
+    if summarizer_type == ['Extractive - TextRank', 'Echdynnol - TextRank']:
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
         # option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))

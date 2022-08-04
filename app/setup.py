@@ -29,8 +29,8 @@ MESSAGES = {
             - The *Abstractive* tool tries to 'understand' the text and create a summary without copying the original. This is based on the [Text-to-Text-Transfer-Tranformer (T5)](https://arxiv.org/pdf/1910.10683.pdf) architecture and was created by adapting the Google mT5 model. Given the complexity of this tool, it requires further development.
             - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
              """,
-    'cy.sb.md': '### 🌷 Adnodd Creu Crynodebau',
-    'en.sb.md': '### 🌷 Welsh Summary Creator',
+    'cy.sb.md': '#### 🌷 Adnodd Creu Crynodebau',
+    'en.sb.md': '#### 🌷 Welsh Summary Creator',
     'cy.sb.sl': 'Dewiswch gymhareb y crynodeb [10% i 50%]:',
     'en.sb.sl': 'Select summary ratio [10% to 50%]',
     'cy.button': 'Crynhoi👈',
@@ -102,13 +102,12 @@ def upload_multiple_files(lang='cy'):
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
-    st.markdown(MESSAGES[f'{lang}.sb.md'])
     summarizer_type = st.sidebar.radio('Summarizer type:',
                         (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
     if summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:
+        st.markdown(MESSAGES[f'{lang}.sb.md'])
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
-        # option = st.sidebar.radio('Sut ydych chi am fewnbynnu eich testun?', ('Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'))
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
         chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10)/100
@@ -127,14 +126,6 @@ def run_summarizer():
         st.markdown('#### 🌷 Abstractive Summarizer 0.0.1 (Alpha Version)')
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
-            
-            # st.markdown(
-                # """
-                # - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
-                # - It performs simple abtractive summarisation with our Welsh [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) model [cyT5-small](https://huggingface.co/ignatius/cyT5-small) extracted from the Google MT5 and finetuned with the [Welsh Summarization Dataset](https://huggingface.co/datasets/ignatius/welsh_summarization).
-                # """
-            # )
-        # option = st.sidebar.radio('How do you want to input your text?', ('Use an example text', 'Paste a copied', 'Upload a text file'))
         
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
@@ -148,4 +139,3 @@ def run_summarizer():
                     st.write("Well, this should not happen.")
             else:
               st.write('Please select an example, or paste/upload your text')
-              

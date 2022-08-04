@@ -20,13 +20,13 @@ MESSAGES = {
     'cy.md': """
             - Mae’r adnodd hwn yn rhan o brosiect [Adnodd Creu Crynodebau](https://corcencc.org/acc/) (ACC)!
             - Mae’r adnodd echdynnol yn cynhyrchu crynodeb echdynnol syml gan ddefnyddio algorithm  [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf).
-            - Mae’r adnodd haniaethol yn ceisio 'deall' y testun er mwyn creu crynodeb heb gopïo’r testun gwreiddiol. Mae’n seiliedig ar seilwaith Text-to-Text Transfer Transformer (T5) ac fe’i chrewyd gan addasu model mT5 Google. Gan ystyried cymhlethdod yr adnodd hwn, mae angen datblygiad pellach arno.
+            - Mae’r adnodd haniaethol yn ceisio 'deall' y testun er mwyn creu crynodeb heb gopïo’r testun gwreiddiol. Mae’n seiliedig ar seilwaith [Text-to-Text-Transfer-Tranformer (T5)](https://arxiv.org/pdf/1910.10683.pdf) ac fe’i chrewyd gan addasu model mT5 Google. Gan ystyried cymhlethdod yr adnodd hwn, mae angen datblygiad pellach arno.
             - Mae’r set ddata ar gael drwy [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
             """,
     'en.md': """
             - This tool is part of the [Welsh Summarization Creator](https://corcencc.org/acc/) (WSC) project!
             - The *Extractive* tool produces a simple extractive summarisation with the [TextRank](https://web.eecs.umich.edu/~mihalcea/papers/mihalcea.emnlp04.pdf) algorithm.
-            - The *Abstractive* tool tries to 'understand' the text and create a summary without copying the original. This is based on the [Text-to-Text-Transfer-Tranformer](https://arxiv.org/pdf/1910.10683.pdf) architecture and was created by adapting the Google mT5 model. Given the complexity of this tool, it requires further development.
+            - The *Abstractive* tool tries to 'understand' the text and create a summary without copying the original. This is based on the [Text-to-Text-Transfer-Tranformer (T5)](https://arxiv.org/pdf/1910.10683.pdf) architecture and was created by adapting the Google mT5 model. Given the complexity of this tool, it requires further development.
             - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
              """,
     'cy.sb.md': '### 🌷 Adnodd Creu Crynodebau',
@@ -102,7 +102,7 @@ def upload_multiple_files(lang='cy'):
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
-    st.sidebar.markdown(MESSAGES[f'{lang}.sb.md'])
+    st.markdown(MESSAGES[f'{lang}.sb.md'])
     summarizer_type = st.sidebar.radio('Summarizer type:',
                         (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
     if summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:

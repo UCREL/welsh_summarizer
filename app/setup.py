@@ -125,7 +125,7 @@ def run_summarizer():
                 st.write("Rhowch eich testun...(Please enter your text...)")
 
     else: # Abstractive Summarizer
-        st.markdown(MESSAGES[f'{lang}.abs.md')
+        st.markdown(MESSAGES[f'{lang}.abs.md'])
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
         

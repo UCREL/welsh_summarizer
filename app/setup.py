@@ -29,8 +29,10 @@ MESSAGES = {
             - The *Abstractive* tool tries to 'understand' the text and create a summary without copying the original. This is based on the [Text-to-Text-Transfer-Tranformer (T5)](https://arxiv.org/pdf/1910.10683.pdf) architecture and was created by adapting the Google mT5 model. Given the complexity of this tool, it requires further development.
             - The dataset is available through [GitHub](https://github.com/UCREL/welsh-summarization-dataset).
              """,
-    'cy.sb.md': '#### 🌷 Adnodd Creu Crynodebau',
-    'en.sb.md': '#### 🌷 Welsh Summary Creator',
+    'cy.ext.md': '#### 🌷 Adnodd Creu Crynodebau Echdynnol',
+    'en.ext.md': '#### 🌷 Extractive Summariser',
+    'cy.abs.md': '#### 🌷 Adnodd Creu Crynodebau Haniaethol 0.1 (Alffa)',
+    'en.abs.md': '#### 🌷 Abstractive Summariser 0.1 (Alpha)',
     'cy.sb.sl': 'Dewiswch gymhareb y crynodeb [10% i 50%]:',
     'en.sb.sl': 'Select summary ratio [10% to 50%]',
     'cy.button': 'Crynhoi👈',
@@ -105,7 +107,7 @@ def run_summarizer():
     summarizer_type = st.sidebar.radio(MESSAGES[f'{lang}.summary.type']+':',
                         (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
     if summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:
-        st.markdown(MESSAGES[f'{lang}.sb.md'])
+        st.markdown(MESSAGES[f'{lang}.ext.md'])
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
@@ -123,7 +125,7 @@ def run_summarizer():
                 st.write("Rhowch eich testun...(Please enter your text...)")
 
     else: # Abstractive Summarizer
-        st.markdown('#### 🌷 Abstractive Summarizer 0.0.1 (Alpha Version)')
+        st.markdown(MESSAGES[f'{lang}.abs.md')
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
         

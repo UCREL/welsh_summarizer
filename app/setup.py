@@ -102,7 +102,7 @@ def upload_multiple_files(lang='cy'):
 def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
-    summarizer_type = st.sidebar.radio('Summarizer type:',
+    summarizer_type = st.sidebar.radio(MESSAGES[f'{lang}.summary.type']+':',
                         (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
     if summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:
         st.markdown(MESSAGES[f'{lang}.sb.md'])

@@ -58,7 +58,8 @@ def get_input_text(option, lang='cy'):
 	input_text=''
 	if option == MESSAGES[lang][0]:
 		example_fname = st.sidebar.selectbox(MESSAGES[lang][1], sorted([f for f in os.listdir(EXAMPLES_DIR) if f.startswith('cy')]))
-		with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+#		with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='utf8') as example_file:
+		with open(os.path.join(EXAMPLES_DIR, example_fname), 'r', encoding='iso-8859-1') as example_file:
 				example_text = example_file.read()
 		input_text = st.text_area(MESSAGES[lang][2], example_text, height=300)
 
@@ -68,7 +69,6 @@ def get_input_text(option, lang='cy'):
 	else:
 		input_text = st.text_area(MESSAGES[lang][5], MESSAGES[lang][6])
 	return input_text
-
 
 # text_rank
 def text_rank_summarize(article, ratio):
@@ -83,7 +83,8 @@ def uploadfile(lang='cy'):
         uploaded_file = st.file_uploader("Choose a text file")
         return_msg = '<Please upload your file ...>'
     if uploaded_file is not None:
-        stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+        # stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+        stringio = StringIO(uploaded_file.getvalue().decode("iso-8859-1"))
         return stringio.read()
     else:
         return return_msg
@@ -97,7 +98,7 @@ def upload_multiple_files(lang='cy'):
         return_msg = '<Please upload your file ...>'
     bytes_data = ''
     for uploaded_file in uploaded_files:
-        bytes_data += uploaded_file.read().decode("utf-8") 
+        bytes_data += uploaded_file.read().decode('utf-8') 
     return bytes_data
 
 #---------------------------------apps------------------------------

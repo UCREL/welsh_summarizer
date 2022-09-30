@@ -86,7 +86,7 @@ def run_summarizer():
                 else:
                     st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
             else:
-                st.info(f"""Rhowch eich testun...(Please enter your text...)""", icon="U+1F917")
+                st.info(f"""Rhowch eich testun...(Please enter your text...)""", icon="\U+1F917")
 
     else: # Abstractive Summarizer
         st.markdown(MESSAGES[f'{lang}.abs.md'])

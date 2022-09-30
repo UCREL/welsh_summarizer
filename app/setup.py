@@ -78,7 +78,7 @@ def run_summarizer():
         input_text = get_input_text(option, lang=lang)
         
         chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10, value=40)/100
-        include1stSent = st.sidebar.checkbox(f"{MESSAGES[f'{lang}.incl1stSent']})
+        include1stSent = st.sidebar.checkbox(f"{MESSAGES[f'{lang}.incl1stSent']}")
 
         if st.button(MESSAGES[f'{lang}.button']):
             summary=''

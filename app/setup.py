@@ -69,8 +69,9 @@ def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
     summarizer_type = st.sidebar.radio(MESSAGES[f'{lang}.summary.type']+':',
-                        (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small"))
-    if summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:
+                        (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small {'Alffa' if lang=='cy' else 'alpha'}"))
+                        
+    if summarizer_type.endswith('TextRank'): # summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:
         st.markdown(MESSAGES[f'{lang}.ext.md'])
         with st.expander(MESSAGES[f'{lang}.info.title'], expanded=False):
             st.markdown(MESSAGES[f'{lang}.md'])
@@ -88,16 +89,11 @@ def run_summarizer():
                     summary = text_rank_summarize(input_text, ratio=chosen_ratio)
                     if summary:
                         if first_sent not in summary: summary = f"{first_sent} {summary}"
-                        # st.write(summary)
                     else:
                         summary = sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0]
                         if first_sent not in summary: summary = f"{first_sent} {summary}"
-                        # st.write(summary)
                 else:
                     summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                    # if summary:
-                        # st.write(summary) #st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
-                    # else:
                     if not summary:
                         summary = sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0]
                 st.write(summary)

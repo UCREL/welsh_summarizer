@@ -31,4 +31,7 @@ MESSAGES = {
     'en.abs.warning': 'This may take a while. Please bear with us 😉.',
     'cy':["Defnyddiwch destun enghreifftiol", "Dewiswch destun enghreifftiol:", "Crynhowch y testun enghreifftiol yn y blwch:", "Uwchlwythwch ffeil destun", "Crynhoi testun wedi'i uwchlwytho:", "Teipiwch neu gludwch eich testun yn y blwch testun", "Rhowch eich testun...", 'Sut ydych chi am fewnbynnu eich testun?', 'Defnyddiwch destun enghreifftiol', 'Rhowch eich testun eich hun', 'Uwchlwythwch ffeil destun'],
     'en':["Use an example text", 'Select example text:',"Summarise the example text in the box:", "Upload a text file", "Summarise uploaded text:", "Type or paste your text into the text box:", "Please enter your text...", 'How do you want to input your text?', 
-          'Use an example text', 'Paste a copied text', 'Upload a text file']}
+          'Use an example text', 'Paste a copied text', 'Upload a text file'],
+    'en.incl1stSent': 'Include the first sentence in the summary',
+    'cy.incl1stSent': 'Cynnwys y frawddeg gyntaf yn y crynodeb'
+}

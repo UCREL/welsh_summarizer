@@ -76,15 +76,31 @@ def run_summarizer():
             st.markdown(MESSAGES[f'{lang}.md'])
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
+        
         chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10, value=40)/100
+        include1stSent = st.sidebar.checkbox(f"{MESSAGES[f'{lang}.incl1stSent']})
 
         if st.button(MESSAGES[f'{lang}.button']):
+            summary=''
             if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':
-                summary = text_rank_summarize(input_text, ratio=chosen_ratio)
-                if summary:
-                    st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                if include1stSent:
+                    first_sent = sent_tokenize(input_text)[0]
+                    summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                    if summary:
+                        if first_sent not in summary: summary = f"{first_sent} {summary}"
+                        # st.write(summary)
+                    else:
+                        summary = sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0]
+                        if first_sent not in summary: summary = f"{first_sent} {summary}"
+                        # st.write(summary)
                 else:
-                    st.write(sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0])
+                    summary = text_rank_summarize(input_text, ratio=chosen_ratio)
+                    # if summary:
+                        # st.write(summary) #st.write(text_rank_summarize(input_text, ratio=chosen_ratio))
+                    # else:
+                    if not summary:
+                        summary = sent_tokenize(text_rank_summarize(input_text, ratio=0.5))[0]
+                st.write(summary)
             else:
                 st.info(f"""Rhowch eich testun...(Please enter your text...)""", icon='😎')
 

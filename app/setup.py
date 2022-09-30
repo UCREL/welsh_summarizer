@@ -69,7 +69,7 @@ def run_summarizer():
     language = st.sidebar.selectbox('Newid iaith (Change language):', ['Cymraeg', 'English'])
     lang = 'cy' if language == 'Cymraeg' else 'en'
     summarizer_type = st.sidebar.radio(MESSAGES[f'{lang}.summary.type']+':',
-                        (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small {'Alffa' if lang=='cy' else 'alpha'}"))
+                        (f"{MESSAGES[f'{lang}.extractive']} - TextRank", f"{MESSAGES[f'{lang}.abstractive']} - CyT5Small {'Alffa 0.1' if lang=='cy' else '(Alpha 0.1)'}"))
                         
     if summarizer_type.endswith('TextRank'): # summarizer_type in ['Extractive - TextRank', 'Echdynnol - TextRank']:
         st.markdown(MESSAGES[f'{lang}.ext.md'])

@@ -76,7 +76,7 @@ def run_summarizer():
             st.markdown(MESSAGES[f'{lang}.md'])
         option = st.sidebar.radio(MESSAGES[lang][7], (MESSAGES[lang][8], MESSAGES[lang][9], MESSAGES[lang][10]))
         input_text = get_input_text(option, lang=lang)
-        chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10)/100
+        chosen_ratio = st.sidebar.slider(MESSAGES[f'{lang}.sb.sl'], min_value=10, max_value=50, step=10, value=40)/100
 
         if st.button(MESSAGES[f'{lang}.button']):
             if input_text and input_text!='<Rhowch eich testun (Please enter your text...)>':

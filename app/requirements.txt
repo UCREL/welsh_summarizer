@@ -1,6 +1,6 @@
 numpy
 nltk
-sklearn
+scikit-learn
 lexrank
 summa
 networkx
